@@ -1,0 +1,512 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>前端开发性能优化 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="other/堆和栈.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="性能优化.html">
+            
+                <a href="性能优化.html">
+            
+                    
+                    前端开发性能优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="other/堆和栈.html">
+            
+                <a href="other/堆和栈.html">
+            
+                    
+                    堆和栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="other/原型.html">
+            
+                <a href="other/原型.html">
+            
+                    
+                    __proto__和prototype之区别和联系
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >前端开发性能优化</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x524D;&#x7AEF;&#x5F00;&#x53D1;&#x6027;&#x80FD;&#x4F18;&#x5316;">&#x524D;&#x7AEF;&#x5F00;&#x53D1;&#x6027;&#x80FD;&#x4F18;&#x5316;</h1>
+<h3 id="1-&#x5355;&#x4E2A;react&#x7EC4;&#x4EF6;&#x6027;&#x80FD;&#x4F18;&#x5316;">1. &#x5355;&#x4E2A;react&#x7EC4;&#x4EF6;&#x6027;&#x80FD;&#x4F18;&#x5316;</h3>
+<h4 id="11-render&#x91CC;&#x9762;&#x5C3D;&#x91CF;&#x51CF;&#x5C11;&#x65B0;&#x5EFA;&#x53D8;&#x91CF;&#x548C;bind&#x51FD;&#x6570;&#x7684;&#x4F7F;&#x7528;&#xFF0C;&#x5C3D;&#x91CF;&#x51CF;&#x5C11;&#x4F20;&#x9012;&#x53C2;&#x6570;&#x7684;&#x6570;&#x91CF;">1.1 <code>render</code>&#x91CC;&#x9762;&#x5C3D;&#x91CF;&#x51CF;&#x5C11;&#x65B0;&#x5EFA;&#x53D8;&#x91CF;&#x548C;<code>bind</code>&#x51FD;&#x6570;&#x7684;&#x4F7F;&#x7528;&#xFF0C;&#x5C3D;&#x91CF;&#x51CF;&#x5C11;&#x4F20;&#x9012;&#x53C2;&#x6570;&#x7684;&#x6570;&#x91CF;</h4>
+<p>&#x5728;<code>render</code>&#x4E2D;&#x7ED1;&#x5B9A;&#x51FD;&#x6570;&#xFF0C;&#x65E0;&#x975E;&#x5C31;&#x662F;&#x4E0B;&#x9762;&#x4E09;&#x79CD;&#xFF1A;</p>
+<pre><code>render() {
+  return (
+    &lt;div className=&apos;app&apos;&gt;
+      &lt;span onClick={this.handleClick}&gt;1&lt;/span&gt;
+      &lt;span onClick={this.handleClick.bind(this)}&gt;2&lt;/span&gt;
+      &lt;span onClick={()=&gt;this.handleClick()}&gt;3&lt;/span&gt;
+    &lt;/div&gt;
+  )
+}
+</code></pre><p>&#x7B2C;&#x4E00;&#x79CD;&#x662F;&#x5728;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E2D;&#x7ED1;&#x5B9A;<code>this</code>&#xFF0C;&#x7B2C;&#x4E8C;&#x79CD;&#x662F;&#x5728;<code>render()</code>&#x51FD;&#x6570;&#x91CC;&#x9762;&#x7ED1;&#x5B9A;<code>this</code>&#xFF0C;&#x7B2C;&#x4E09;&#x79CD;&#x5C31;&#x662F;&#x4F7F;&#x7528;&#x7BAD;&#x5934;&#x51FD;&#x6570;&#xFF0C;&#x4E0A;&#x8FF0;&#x65B9;&#x6CD5;&#x90FD;&#x80FD;&#x5B9E;&#x73B0;<code>this</code>&#x7684;&#x7ED1;&#x5B9A;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x54EA;&#x4E00;&#x79CD;&#x65B9;&#x6CD5;&#x7684;&#x6027;&#x80FD;&#x6700;&#x597D;&#xFF0C;&#x662F;&#x6211;&#x4EEC;&#x8981;&#x8003;&#x8651;&#x7684;&#x95EE;&#x9898;&#x3002;<strong>&#x6BEB;&#x65E0;&#x7591;&#x95EE;&#x7B2C;&#x4E00;&#x79CD;&#x7684;&#x6027;&#x80FD;&#x6700;&#x597D;</strong>&#x3002;</p>
+<p><strong>&#x7B2C;&#x4E00;&#x79CD;&#x65B9;&#x6CD5;&#xFF0C;&#x6784;&#x9020;&#x51FD;&#x6570;&#x6BCF;&#x6E32;&#x67D3;&#x4E00;&#x6B21;&#x4FBF;&#x4F1A;&#x6267;&#x884C;&#x4E00;&#x904D;&#xFF1B;</strong></p>
+<p><strong>&#x7B2C;&#x4E8C;&#x79CD;&#x65B9;&#x6CD5;&#xFF0C;&#x5728;&#x6BCF;&#x6B21;<code>render()</code>&#x7684;&#x65F6;&#x5019;&#x90FD;&#x4F1A;&#x91CD;&#x65B0;&#x6267;&#x884C;&#x4E00;&#x904D;&#x51FD;&#x6570;&#xFF1B;</strong></p>
+<p><strong>&#x7B2C;&#x4E09;&#x79CD;&#x65B9;&#x6CD5;&#xFF0C;&#x6BCF;&#x4E00;&#x6B21;<code>render()</code>&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x90FD;&#x4F1A;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x7BAD;&#x5934;&#x51FD;&#x6570;&#xFF0C;&#x5373;&#x4F7F;&#x4E24;&#x4E2A;&#x7BAD;&#x5934;&#x51FD;&#x6570;&#x7684;&#x5185;&#x5BB9;&#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;</strong></p>
+<p><code>react</code>&#x5224;&#x65AD;&#x662F;&#x5426;&#x9700;&#x8981;&#x8FDB;&#x884C;<code>render</code>&#x662F;<strong>&#x6D45;&#x5C42;&#x6BD4;&#x8F83;</strong>&#xFF0C;&#x7B80;&#x5355;&#x6765;&#x8BF4;&#x5C31;&#x662F;&#x901A;&#x8FC7;<code>===</code>&#x6765;&#x5224;&#x65AD;&#x7684;&#xFF0C;&#x5982;&#x679C;<code>state</code>&#x6216;&#x8005;<code>prop</code>&#x7684;&#x7C7B;&#x578B;&#x662F;&#x5B57;&#x7B26;&#x4E32;&#x6216;&#x8005;&#x6570;&#x5B57;&#xFF0C;&#x53EA;&#x8981;&#x503C;&#x76F8;&#x540C;&#xFF0C;&#x90A3;&#x4E48;&#x6D45;&#x5C42;&#x6BD4;&#x8F83;&#x5C31;&#x4F1A;&#x8BA4;&#x4E3A;&#x5176;&#x76F8;&#x540C;&#xFF1B;</p>
+<p><strong>&#x4F46;&#x662F;&#x5982;&#x679C;&#x524D;&#x8005;&#x7684;&#x7C7B;&#x578B;&#x662F;&#x590D;&#x6742;&#x7684;&#x5BF9;&#x8C61;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x5BF9;&#x8C61;&#x662F;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#xFF0C;&#x6D45;&#x5C42;&#x6BD4;&#x8F83;&#x53EA;&#x4F1A;&#x8BA4;&#x4E3A;&#x8FD9;&#x4E24;&#x4E2A;<code>prop</code>&#x662F;&#x4E0D;&#x662F;&#x540C;&#x4E00;&#x4E2A;&#x5F15;&#x7528;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x662F;&#xFF0C;&#x54EA;&#x6015;&#x8FD9;&#x4E24;&#x4E2A;&#x5BF9;&#x8C61;&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#x5B8C;&#x5168;&#x4E00;&#x6837;&#xFF0C;&#x4E5F;&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x4E24;&#x4E2A;&#x4E0D;&#x540C;&#x7684;<code>prop</code>&#x3002;</strong></p>
+<p>&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<p>&#x5F53;&#x6211;&#x4EEC;&#x7ED9;&#x7EC4;&#x4EF6;<code>App</code>&#x540D;&#x4E3A;<code>style</code>&#x7684;<code>prop</code>&#x8D4B;&#x503C;&#xFF1B;</p>
+<pre><code>&lt;App style={{ color:&quot;green&quot; }}
+</code></pre><p>&#x4F7F;&#x7528;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#xFF0C;&#x6BCF;&#x4E00;&#x6B21;&#x6E32;&#x67D3;&#x90FD;&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x4E00;&#x4E2A;<code>style</code>&#x8FD9;&#x4E2A;<code>prop</code>&#x53D1;&#x751F;&#x4E86;&#x53D8;&#x5316;&#xFF0C;&#x56E0;&#x4E3A;&#x6BCF;&#x4E00;&#x6B21;&#x90FD;&#x4F1A;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7ED9;<code>style</code>&#x3002;</p>
+<p>&#x5982;&#x679C;&#x60F3;&#x8981;&#x8BA9;<code>react</code>&#x6E32;&#x67D3;&#x7684;&#x65F6;&#x5019;&#x8BA4;&#x4E3A;&#x524D;&#x540E;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;<code>prop</code>&#x76F8;&#x540C;&#xFF0C;&#x5219;&#x5FC5;&#x987B;&#x8981;&#x4FDD;&#x8BC1;<code>prop</code>&#x6307;&#x5411;&#x540C;&#x4E00;&#x4E2A;<code>javascript</code>&#x5BF9;&#x8C61;&#xFF0C;&#x6539;&#x8FDB;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>const appStyle = { color: &quot;red&quot; }; //&#x8FD9;&#x4E2A;&#x521D;&#x59CB;&#x5316;&#x53EA;&#x6267;&#x884C;&#x4E00;&#x6B21;&#xFF0C;&#x4E0D;&#x8981;&#x653E;&#x5728;render&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x653E;&#x5728;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E2D;
+&lt;App style={appStyle} /&gt;
+</code></pre><h4 id="12-&#x5B9A;&#x5236;shouldcomponentupdate&#x51FD;&#x6570;">1.2 &#x5B9A;&#x5236;<code>shouldComponentUpdate</code>&#x51FD;&#x6570;</h4>
+<p>&#x751F;&#x547D;&#x5468;&#x671F;&#x51FD;&#x6570;<code>shouldComponentUpdate</code>&#x662F;&#x51B3;&#x5B9A;<code>react</code>&#x7EC4;&#x4EF6;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x80FD;&#x591F;&#x91CD;&#x65B0;&#x6E32;&#x67D3;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x9ED8;&#x8BA4;&#x7684;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x5C31;&#x662F;&#x7B80;&#x5355;&#x7684;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;<code>true</code>&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x9ED8;&#x8BA4;&#x6BCF;&#x6B21;&#x66F4;&#x65B0;&#x7684;&#x65F6;&#x5019;&#x90FD;&#x8981;&#x8C03;&#x7528;&#x6240;&#x7528;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x51FD;&#x6570;&#xFF0C;&#x5305;&#x62EC;<code>render</code>&#x51FD;&#x6570;&#xFF0C;&#x91CD;&#x65B0;&#x6E32;&#x67D3;&#x3002;</p>
+<p>&#x770B;&#x770B;&#x4E0B;&#x9762;&#x8FD9;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<pre><code>class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count = 2,
+      name = &apos;apple&apos;,
+    }
+    this.handleClick = this.handleClick.bind(this);
+    this.handleName = this.handleName.bind(this);
+  }
+  this.handleClick() {
+  // ...
+  }
+  this.handleName() {
+  // ...
+  }
+  render() {
+    return (
+      &lt;div className=&apos;app&apos;&gt;
+        &lt;span&gt;&#x6570;&#x91CF;&#xFF0C;{this.state.count}&lt;/span&gt;
+        &lt;button onClick={this.handleClick}&gt;&#x6539;&#x53D8;&#x6570;&#x91CF;&lt;/button&gt;
+        &lt;button onClick={this.handleName}&gt;&#x6539;&#x53D8;&#x540D;&#x5B57;&lt;/button&gt;
+        &lt;Child title={this.state.name}&gt;&lt;/Child&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+
+class Child extends React.Component {
+  render() {
+    console.log(&apos;render&#x4E86;&#x4E00;&#x6B21;&apos;);
+    return (
+      &lt;h3&gt;&#x6211;&#x60F3;&#x5403;&#xFF0C;{this.props.title}&lt;/h3&gt;
+    );
+  }
+}
+</code></pre><p>&#x6211;&#x4EEC;&#x5199;&#x4E86;&#x4E24;&#x4E2A;&#x7EC4;&#x4EF6;&#xFF0C;<code>App</code>&#x548C;<code>Child</code>&#x7EC4;&#x4EF6;&#xFF0C;&#x5E76;&#x5199;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x4E00;&#x4E2A;&#x6539;&#x53D8;<code>App</code>&#x4E2D;&#x7684;<code>count</code>&#x7684;&#x503C;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;&#x6539;&#x53D8;<code>name</code>&#xFF0C;&#x6211;&#x4EEC;&#x5728;<code>Child</code>&#x7684;<code>render</code>&#x4E2D;&#x6253;&#x5370;&#x4E86;&#x6BCF;&#x6B21;&#x662F;&#x5426;&#x6267;&#x884C;&#x3002;</p>
+<p>&#x4E0D;&#x51FA;&#x610F;&#x5916;&#xFF0C;&#x867D;&#x7136;<code>Child</code>&#x7EC4;&#x4EF6;&#x91CC;&#x7684;<code>title</code>&#x503C;&#x6CA1;&#x6709;&#x6539;&#x53D8;&#xFF0C;&#x4F46;&#x662F;&#x8FD8;&#x662F;<code>render</code>&#x4E86;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x8FDB;&#x4E00;&#x6B65;&#x4F18;&#x5316;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x4EEC;&#x8FD9;&#x6837;&#x6539;<code>Child</code>&#x7EC4;&#x4EF6;&#xFF1A;</p>
+<pre><code>class Child extends React.Component {
+  shouldComponentUpdate(nextProps,nextState) {
+    if(nextProps.title == this.props.title) {
+      return false;
+    }
+    return true;
+  }
+
+  render() {
+    console.log(&apos;render&#x4E86;&#x4E00;&#x6B21;&apos;);
+    return (
+      &lt;h3&gt;&#x6211;&#x60F3;&#x5403;&#xFF0C;{this.props.title}&lt;/h3&gt;
+    );
+  }
+}
+</code></pre><p>&#x53EA;&#x6709;&#x5F53;<code>Child</code>&#x7684;<code>title</code>&#x503C;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x7EC4;&#x4EF6;&#x624D;&#x4F1A;&#x53BB;<code>render</code>&#x3002;</p>
+<p>&#x5728;&#x6700;&#x65B0;&#x7684;<code>react</code>&#x4E2D;&#xFF0C;<code>react</code>&#x7ED9;&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;<code>React.PureComponent</code>&#xFF0C;&#x5B98;&#x65B9;&#x4E5F;&#x5728;&#x65E9;&#x671F;&#x63D0;&#x4F9B;&#x4E86;&#x540D;&#x4E3A;<code>react-addons-pure-render-mixin</code>&#x63D2;&#x4EF6;&#x6765;&#x91CD;&#x65B0;&#x5B9E;&#x73B0;<code>shouldComponentUpdate</code>&#x751F;&#x547D;&#x5468;&#x671F;&#x65B9;&#x6CD5;&#x3002;</p>
+<pre><code>class Child extends React.PureComponent {
+  // shouldComponentUpdate(nextProps,nextState) {
+  //   if(nextProps.title == this.props.title) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
+
+  render() {
+    console.log(&apos;render&#x4E86;&#x4E00;&#x6B21;&apos;);
+    return (
+      &lt;h3&gt;&#x6211;&#x60F3;&#x5403;&#xFF0C;{this.props.title}&lt;/h3&gt;
+    );
+  }
+}
+</code></pre><p>&#x901A;&#x8FC7;&#x4E0A;&#x8FF0;&#x7684;&#x65B9;&#x6CD5;&#x7684;&#x6548;&#x679C;&#x4E5F;&#x662F;&#x548C;&#x6211;&#x4EEC;&#x5148;&#x524D;&#x5B9A;&#x5236;<code>shouldComponentUpdate</code>&#x7684;&#x6548;&#x679C;&#x662F;&#x4E00;&#x81F4;&#x7684;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x8FD9;&#x91CC;&#x7684;<code>PureRender</code>&#x662F;&#x6D45;&#x6BD4;&#x8F83;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x6DF1;&#x6BD4;&#x8F83;&#x7684;&#x573A;&#x666F;&#x662F;&#x76F8;&#x5F53;&#x6602;&#x8D35;&#x7684;&#x3002;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x8981;&#x6CE8;&#x610F;&#x6211;&#x4EEC;&#x5728;<code>1.1</code>&#x4E2D;&#x8BF4;&#x5230;&#x7684;&#x4E00;&#x4E9B;&#x6CE8;&#x610F;&#x70B9;&#xFF1A;<strong>&#x4E0D;&#x8981;&#x76F4;&#x63A5;&#x4E3A;<code>props</code>&#x8BBE;&#x7F6E;&#x5BF9;&#x8C61;&#x6216;&#x8005;&#x6570;&#x7EC4;</strong>&#x3001;<strong>&#x4E0D;&#x8981;&#x5C06;&#x65B9;&#x6CD5;&#x76F4;&#x63A5;&#x7ED1;&#x5B9A;&#x5728;&#x5143;&#x7D20;&#x4E0A;&#xFF0C;&#x56E0;&#x4E3A;&#x5176;&#x5B9E;&#x51FD;&#x6570;&#x4E5F;&#x662F;&#x5BF9;&#x8C61;&#x3002;</strong></p>
+<h4 id="13-immutablejs">1.3 Immutable.js</h4>
+<p><code>javascript</code>&#x4E2D;&#x7684;&#x5BF9;&#x8C61;&#x4E00;&#x822C;&#x90FD;&#x662F;&#x53EF;&#x53D8;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x4F7F;&#x7528;&#x4E86;&#x5F15;&#x7528;&#x8D4B;&#x503C;&#xFF0C;&#x65B0;&#x7684;&#x5BF9;&#x8C61;&#x7B80;&#x5355;&#x7684;&#x5F15;&#x7528;&#x4E86;&#x539F;&#x59CB;&#x5BF9;&#x8C61;&#xFF0C;&#x6539;&#x53D8;&#x65B0;&#x5BF9;&#x8C61;&#x5C06;&#x5F71;&#x54CD;&#x5230;&#x539F;&#x59CB;&#x5BF9;&#x8C61;&#x3002;</p>
+<p>&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<pre><code>student = { age : 1 };
+school = student;
+school.age = 2;
+</code></pre><p>&#x5F53;&#x6211;&#x4EEC;&#x7ED9;<code>school.age</code>&#x8D4B;&#x503C;&#x540E;&#xFF0C;&#x4F1A;&#x53D1;&#x73B0;<code>student.a</code>&#x4E5F;&#x53D8;&#x6210;&#x4E86;2&#xFF0C;&#x867D;&#x7136;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6DF1;&#x62F7;&#x8D1D;&#x4E0E;&#x6D45;&#x62F7;&#x8D1D;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x6837;&#x505A;&#x975E;&#x5E38;&#x7684;&#x6602;&#x8D35;&#xFF0C;&#x5BF9;<code>cpu</code>&#x548C;&#x5185;&#x5B58;&#x4F1A;&#x9020;&#x6210;&#x6D6A;&#x8D39;&#x3002;</p>
+<p>&#x8FD9;&#x91CC;&#x5C31;&#x9700;&#x8981;&#x7528;&#x5230;<code>Immutable</code>&#xFF0C;&#x901A;&#x8FC7;<code>Immutable</code>&#x521B;&#x5EFA;&#x7684;<code>Immutable Data</code>&#x4E00;&#x65E6;&#x88AB;&#x521B;&#x5EFA;&#xFF0C;&#x5C31;&#x4E0D;&#x80FD;&#x518D;&#x66F4;&#x6539;&#x3002;&#x5BF9;<code>Immutable</code>&#x5BF9;&#x8C61;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#x3001;&#x6DFB;&#x52A0;&#x6216;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#xFF0C;&#x90FD;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x65B0;&#x7684;<code>Immutable</code>&#x5BF9;&#x8C61;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x662F;&#x4E09;&#x4E2A;&#x6BD4;&#x8F83;&#x91CD;&#x8981;&#x4E14;&#x7528;&#x5230;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;</p>
+<ul>
+<li><strong><code>Map</code>&#xFF1A;&#x952E;&#x503C;&#x5BF9;&#x96C6;&#x5408;&#xFF0C;&#x5BF9;&#x5E94;Object&#xFF0C;ES6&#x4E2D;&#x4E5F;&#x6709;&#x4E13;&#x95E8;&#x7684;Map&#x5BF9;&#x8C61;</strong></li>
+<li><strong><code>List</code>&#xFF1A;&#x6709;&#x5E8F;&#x53EF;&#x91CD;&#x590D;&#x5217;&#x8868;&#xFF0C;&#x5BF9;&#x5E94;&#x4E8E;Array</strong></li>
+<li><strong><code>ArraySet</code>&#xFF1A;&#x6709;&#x5E8F;&#x4E14;&#x4E0D;&#x53EF;&#x91CD;&#x590D;&#x7684;&#x5217;&#x8868;</strong></li>
+</ul>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<p>&#x4F7F;&#x7528;<code>Map</code>&#x751F;&#x6210;&#x4E00;&#x4E2A;<code>immutable</code>&#x5BF9;&#x8C61;&#xFF1A;</p>
+<pre><code>import { Map, is } from &apos;immutable&apos;;
+
+let a = Map({
+  &apos;name&apos;: &apos;apple&apos;,
+  &apos;list&apos;: Map({name: &apos;orange&apos;})
+})
+
+let b = a.set(&apos;name&apos;,&apos;banana&apos;);
+
+console.log(a.get(&apos;course&apos;) === b.get(&apos;course&apos;)); // &#x8FD4;&#x56DE;true
+console.log(a === b); // &#x8FD4;&#x56DE;false
+</code></pre><p><code>Immutable.is</code> &#x6BD4;&#x8F83;&#x7684;&#x662F;&#x4E24;&#x4E2A;&#x5BF9;&#x8C61;&#x7684; <code>hashCode</code> &#x6216; <code>valueOf</code>&#xFF08;&#x5BF9;&#x4E8E;<code>JavaScript</code>&#x5BF9;&#x8C61;&#xFF09;&#x3002;&#x7531;&#x4E8E;<code>immutable</code>&#x5185;&#x90E8;&#x4F7F;&#x7528;&#x4E86;<code>Trie</code>&#x6570;&#x636E;&#x7ED3;&#x6784;&#x6765;&#x5B58;&#x50A8;&#xFF0C;&#x53EA;&#x8981;&#x4E24;&#x4E2A;&#x5BF9;&#x8C61;&#x7684; <code>hashCode</code> &#x76F8;&#x7B49;&#xFF0C;&#x503C;&#x5C31;&#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;&#x8FD9;&#x6837;&#x7684;&#x7B97;&#x6CD5;&#x907F;&#x514D;&#x4E86;&#x6DF1;&#x5EA6;&#x904D;&#x5386;&#x6BD4;&#x8F83;&#xFF0C;&#x6027;&#x80FD;&#x975E;&#x5E38;&#x597D;&#x3002;</p>
+<p><strong><code>Immutable</code>&#x4F18;&#x70B9;</strong>&#xFF1A;</p>
+<ul>
+<li>&#x51CF;&#x5C11;&#x5185;&#x5B58;&#x7684;&#x4F7F;&#x7528;</li>
+<li>&#x5E76;&#x53D1;&#x5B89;&#x5168;</li>
+<li>&#x964D;&#x4F4E;&#x9879;&#x76EE;&#x7684;&#x590D;&#x6742;&#x5EA6;</li>
+<li>&#x4FBF;&#x4E8E;&#x6BD4;&#x8F83;&#x590D;&#x6742;&#x6570;&#x636E;&#xFF0C;&#x5B9A;&#x5236;<code>shouldComponentUpdate</code>&#x65B9;&#x4FBF;</li>
+<li>&#x65F6;&#x95F4;&#x65C5;&#x884C;&#x529F;&#x80FD;</li>
+<li>&#x51FD;&#x6570;&#x5F0F;&#x7F16;&#x7A0B;</li>
+</ul>
+<p><strong><code>Immutable</code>&#x7F3A;&#x70B9;</strong>&#xFF1A;</p>
+<ul>
+<li>&#x5B66;&#x4E60;&#x6210;&#x672C;</li>
+<li>&#x5E93;&#x7684;&#x5927;&#x5C0F;&#xFF08;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528;<code>seamless-immutable</code>&#xFF09;</li>
+<li>&#x5BF9;&#x73B0;&#x6709;&#x9879;&#x76EE;&#x5165;&#x4FB5;&#x4E25;&#x91CD;</li>
+<li>&#x5BB9;&#x6613;&#x4E0E;&#x539F;&#x751F;&#x7684;&#x5BF9;&#x8C61;&#x8FDB;&#x884C;&#x6DF7;&#x6DC6;</li>
+</ul>
+<h3 id="2-&#x591A;&#x4E2A;react&#x7EC4;&#x4EF6;&#x6027;&#x80FD;&#x4F18;&#x5316;">2. &#x591A;&#x4E2A;react&#x7EC4;&#x4EF6;&#x6027;&#x80FD;&#x4F18;&#x5316;</h3>
+<p><code>react</code>&#x7EC4;&#x4EF6;&#x5728;&#x88C5;&#x8F7D;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;<code>react</code>&#x901A;&#x8FC7;&#x5728;<code>render</code>&#x65B9;&#x6CD5;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#xFF0C;&#x6811;&#x4E0A;&#x7684;&#x8282;&#x70B9;&#x4EE3;&#x8868;&#x4E00;&#x4E2A;<code>react</code>&#x7EC4;&#x4EF6;&#x6216;&#x8005;&#x539F;&#x751F;&#x7684;<code>Dom</code>&#x5143;&#x7D20;&#xFF0C;&#x8FD9;&#x4E2A;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x6240;&#x8C13;&#x7684;<code>Vitural Dom</code>&#xFF0C;<code>react</code>&#x6839;&#x636E;&#x8FD9;&#x4E2A;&#x6765;&#x6E32;&#x67D3;&#x4EA7;&#x751F;&#x6D4F;&#x89C8;&#x5668;&#x7684;<code>Dom</code>&#x6811;&#x3002;</p>
+<p><code>react</code>&#x5728;&#x66F4;&#x65B0;&#x9636;&#x6BB5;&#x5BF9;&#x6BD4;&#x539F;&#x6709;&#x7684;<code>Vitural Dom</code>&#x548C;&#x65B0;&#x751F;&#x6210;&#x7684;<code>Vitural Dom</code>&#xFF0C;&#x627E;&#x51FA;&#x4E0D;&#x540C;&#x4E4B;&#x5904;&#xFF0C;&#x5728;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x6765;&#x6E32;&#x67D3;<code>Dom</code>&#x6811;&#x3002;</p>
+<p><code>react</code>&#x4E3A;&#x4E86;&#x8FFD;&#x6C42;&#x9AD8;&#x6027;&#x80FD;&#xFF0C;&#x91C7;&#x7528;&#x4E86;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<code>O(N)</code>&#x6765;&#x6BD4;&#x8F83;&#x4E24;&#x4E2A;&#x5C5E;&#x6027;&#x7ED3;&#x6784;&#x7684;&#x533A;&#x522B;&#xFF0C;&#x56E0;&#x4E3A;&#x8981;&#x786E;&#x5207;&#x6BD4;&#x8F83;&#x4E24;&#x4E2A;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#xFF0C;&#x9700;&#x8981;&#x901A;&#x8FC7;<code>O(N^3)</code>&#xFF0C;&#x8FD9;&#x4F1A;&#x964D;&#x4F4E;&#x6027;&#x80FD;&#x3002;</p>
+<ul>
+<li>&#x8282;&#x70B9;&#x7C7B;&#x578B;&#x4E0D;&#x540C;</li>
+</ul>
+<pre><code>// A&#x7EC4;&#x4EF6;
+&lt;div&gt;
+  &lt;Todos /&gt;
+&lt;/div&gt;
+
+// B&#x7EC4;&#x4EF6;
+&lt;span&gt;
+  &lt;Todos /&gt;
+&lt;/span&gt;
+</code></pre><p>&#x6211;&#x4EEC;&#x60F3;&#x628A;<code>A</code>&#x7EC4;&#x4EF6;&#x66F4;&#x65B0;&#x6210;<code>B</code>&#x7EC4;&#x4EF6;&#xFF0C;<code>react</code>&#x5728;&#x505A;&#x6BD4;&#x8F83;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53D1;&#x73B0;&#x6700;&#x5916;&#x9762;&#x7684;&#x6839;&#x7ED3;&#x70B9;&#x5B8C;&#x5168;&#x4E0D;&#x4E00;&#x6837;&#xFF0C;&#x76F4;&#x63A5;&#x9500;&#x6BC1;&#x4E4B;&#x524D;&#x7684;<code>&lt;div&gt;</code>&#x8282;&#x70B9;&#xFF0C;&#x5305;&#x62EC;&#x91CC;&#x9762;&#x7684;&#x5B50;&#x8282;&#x70B9;&#x4E5F;&#x4E00;&#x5E76;&#x9500;&#x6BC1;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x5DE8;&#x5927;&#x7684;&#x6D6A;&#x8D39;&#xFF0C;&#x4F46;&#x662F;&#x4E3A;&#x4E86;&#x907F;&#x514D;<code>O(N^3)</code>&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#xFF0C;&#x53EA;&#x80FD;&#x91C7;&#x7528;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x5728;&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5E94;&#x8BE5;&#x5C3D;&#x91CF;&#x907F;&#x514D;&#x4E0A;&#x9762;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x4E0D;&#x8981;&#x5C06;&#x5305;&#x88F9;&#x8282;&#x70B9;&#x7684;&#x7C7B;&#x578B;&#x968F;&#x610F;&#x6539;&#x53D8;&#x3002;</p>
+<ul>
+<li>&#x4E24;&#x4E2A;&#x8282;&#x70B9;&#x7C7B;&#x578B;&#x4E00;&#x6837;</li>
+</ul>
+<p>&#x8FD9;&#x91CC;&#x5305;&#x62EC;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x8282;&#x70B9;&#x662F;<code>Dom</code>&#x7C7B;&#x578B;&#xFF0C;&#x8FD8;&#x6709;&#x4E00;&#x79CD;<code>react</code>&#x7EC4;&#x4EF6;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;<code>dom</code>&#x7C7B;&#x578B;&#xFF0C;&#x6211;&#x4EEC;&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<pre><code>// A&#x7EC4;&#x4EF6;
+&lt;div style={{color: &apos;red&apos;,fontSize:15}} className=&quot;welcome&quot;&gt;
+  Hello World!!!
+&lt;/div&gt;
+
+// B&#x7EC4;&#x4EF6;
+&lt;div style={{color: &apos;green&apos;,fontSize:15}} className=&quot;react&quot;&gt;
+  Good Bye!!!
+&lt;/div&gt;
+</code></pre><p>&#x4E0A;&#x8FF0;A&#x548C;B&#x7EC4;&#x4EF6;&#x7684;&#x533A;&#x522B;&#x662F;&#x6587;&#x5B57;&#x3001;<code>className</code>&#x3001;<code>style</code>&#x4E2D;&#x7684;<code>color</code>&#x53D1;&#x751F;&#x6539;&#x53D8;&#xFF0C;&#x56E0;&#x4E3A;<code>Dom</code>&#x5143;&#x7D20;&#x6CA1;&#x53D8;&#xFF0C;<code>React</code>&#x53EA;&#x4F1A;&#x4FEE;&#x6539;&#x4ED6;&#x53D8;&#x5316;&#x7684;&#x90E8;&#x5206;&#x3002;</p>
+<p>&#x9488;&#x5BF9;<code>react</code>&#x7EC4;&#x4EF6;&#x7C7B;&#x578B;&#xFF0C;&#x6E32;&#x67D3;&#x65E0;&#x975E;&#x5C31;&#x662F;&#x518D;&#x6267;&#x884C;&#x4E00;&#x904D;&#x7EC4;&#x4EF6;&#x5B9E;&#x4F8B;&#x7684;&#x66F4;&#x65B0;&#x8FC7;&#x7A0B;&#xFF0C;&#x6700;&#x4E3B;&#x8981;&#x7684;&#x5C31;&#x662F;&#x5B9A;&#x5236;<code>shouldComponentUpdate</code>&#x3002;</p>
+<ul>
+<li>&#x591A;&#x4E2A;&#x5B50;&#x7EC4;&#x4EF6;&#x60C5;&#x51B5;</li>
+</ul>
+<p>&#x4F8B;&#x5B50;&#x4E00;&#xFF1A;</p>
+<pre><code>// A
+&lt;ul&gt;
+  &lt;TodoItem text=&quot;First&quot; complete={false} /&gt;
+  &lt;TodoItem text=&quot;Second&quot; complete={false} /&gt;
+&lt;/ul&gt;
+
+// B
+&lt;ul&gt;
+  &lt;TodoItem text=&quot;First&quot; complete={false} /&gt;
+  &lt;TodoItem text=&quot;Second&quot; complete={false} /&gt;
+  &lt;TodoItem text=&quot;Third&quot; complete={false} /&gt;
+&lt;/ul&gt;
+</code></pre><p>&#x4ECE;A&#x53D8;&#x5230;B&#xFF0C;&#x5982;&#x679C;<code>shouldComponentUpdate</code>&#x5904;&#x7406;&#x5F97;&#x5F53;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x88C5;&#x8F7D;<code>third</code>&#x7684;&#x90A3;<strong>&#x4E00;&#x6B21;</strong>&#x5C31;&#x884C;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x6765;&#x770B;&#x770B;&#x4E0B;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<pre><code>// A
+&lt;ul&gt;
+  &lt;TodoItem text=&quot;First&quot; complete={false} /&gt;
+  &lt;TodoItem text=&quot;Second&quot; complete={false} /&gt;
+&lt;/ul&gt;
+
+// B
+&lt;ul&gt;
+  &lt;TodoItem text=&quot;Zero&quot; complete={false} /&gt;
+  &lt;TodoItem text=&quot;First&quot; complete={false} /&gt;
+  &lt;TodoItem text=&quot;Second&quot; complete={false} /&gt;
+&lt;/ul&gt;
+</code></pre><p>&#x8FD9;&#x91CC;&#x56E0;&#x4E3A;<code>react</code>&#x662F;&#x91C7;&#x7528;<code>O(n)</code>&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#xFF0C;&#x6240;&#x4EE5;&#x4F1A;&#x4F9D;&#x6B21;&#x5C06;<code>text</code>&#x4E3A;<code>First</code>&#x7684;&#x6539;&#x4E3A;<code>Zero</code>&#xFF0C;<code>text</code>&#x4E3A;<code>Second</code>&#x6539;&#x4E3A;<code>First</code>&#xFF0C;&#x5728;&#x6700;&#x540E;&#x518D;&#x52A0;&#x4E0A;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;&#xFF0C;<code>text</code>&#x4E3A;<code>Second</code>&#x3002;&#x73B0;&#x5B58;&#x7684;&#x4E24;&#x4E2A;&#x7684;<code>text</code>&#x7684;&#x5C5E;&#x6027;&#x90FD;&#x88AB;&#x6539;&#x53D8;&#x4E86;&#xFF0C;&#x6240;&#x4EE5;&#x4F1A;&#x4F9D;&#x6B21;&#x6E32;&#x67D3;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x6709;100&#x4E2A;&#x5B9E;&#x4F8B;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4F1A;&#x53D1;&#x751F;100&#x6B21;&#x66F4;&#x65B0;&#x3002;</p>
+<p><strong>&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x5C31;&#x8981;&#x7528;&#x5230;<code>Key</code>&#x4E86;</strong></p>
+<p>&#x7B80;&#x5355;&#x6765;&#x8BF4;&#xFF0C;&#x5176;&#x5B9E;&#x8FD9;&#x4E00;&#x4E2A;<code>Key</code>&#x5C31;&#x662F;<code>react</code>&#x7EC4;&#x4EF6;&#x7684;&#x8EAB;&#x4EFD;&#x8BC1;&#x53F7;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x5C06;&#x4E0A;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x6539;&#x6210;&#x5982;&#x4E0B;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x4E0A;&#x9762;&#x7684;&#x95EE;&#x9898;&#x4E86;&#xFF0C;<code>react</code>&#x5C31;&#x80FD;&#x591F;&#x77E5;&#x9053;&#x5176;&#x5B9E;B&#x91CC;&#x9762;&#x7684;&#x7B2C;&#x4E8C;&#x4E2A;&#x548C;&#x7B2C;&#x4E09;&#x4E2A;&#x7EC4;&#x4EF6;&#x5176;&#x5B9E;&#x5C31;&#x662F;A&#x4E2D;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x548C;&#x7B2C;&#x4E8C;&#x4E2A;&#x5B9E;&#x4F8B;&#x3002;</p>
+<pre><code>// A
+&lt;ul&gt;
+  &lt;TodoItem key={1} text=&quot;First&quot; complete={false} /&gt;
+  &lt;TodoItem key={2} text=&quot;Second&quot; complete={false} /&gt;
+&lt;/ul&gt;
+
+// B
+&lt;ul&gt;
+  &lt;TodoItem key={0} text=&quot;Zero&quot; complete={false} /&gt;
+  &lt;TodoItem key={1} text=&quot;First&quot; complete={false} /&gt;
+  &lt;TodoItem key={2} text=&quot;Second&quot; complete={false} /&gt;
+&lt;/ul&gt;
+</code></pre><p>&#x4E0D;&#x8FC7;&#x73B0;&#x5728;&#xFF0C;<code>react</code>&#x4E5F;&#x4F1A;&#x63D0;&#x9192;&#x6211;&#x4EEC;&#x4E0D;&#x8981;&#x5FD8;&#x8BB0;&#x4F7F;&#x7528;<code>key</code>&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x52A0;&#xFF0C;&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x4F1A;&#x62A5;&#x9519;&#x3002;</p>
+<p>&#x5173;&#x4E8E;<code>key</code>&#x7684;&#x4F7F;&#x7528;&#x6211;&#x4EEC;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x8FD9;&#x4E2A;<code>key</code>&#x503C;&#x8981;&#x7A33;&#x5B9A;&#x4E0D;&#x53D8;&#x7684;&#xFF0C;&#x5C31;&#x5982;&#x540C;<strong>&#x8EAB;&#x4EFD;&#x8BC1;&#x53F7;</strong>&#x5BF9;&#x4E8E;&#x6211;&#x4EEC;&#x662F;&#x7A33;&#x5B9A;&#x4E0D;&#x53D8;&#x7684;&#x4E00;&#x6837;&#x3002;</p>
+<p><strong>&#x4E00;&#x4E2A;&#x5E38;&#x89C1;&#x7684;&#x9519;&#x8BEF;&#x5C31;&#x662F;&#xFF0C;&#x62FF;&#x6570;&#x7EC4;&#x7684;&#x7684;&#x4E0B;&#x6807;&#x503C;&#x53BB;&#x5F53;&#x505A;<code>key</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x662F;&#x5F88;&#x5371;&#x9669;&#x7684;&#xFF0C;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF0C;&#x6211;&#x4EEC;&#x4E00;&#x5B9A;&#x8981;&#x907F;&#x514D;</strong></p>
+<pre><code>&lt;ul&gt;
+  {
+    todos.map((item, index) =&gt; {
+      &lt;TodoItem
+        key={index}
+        text={item.text}
+        completed={item.completed}
+      &gt;
+    })
+  }
+&lt;/ul&gt;
+</code></pre><p>&#x672A;&#x5B8C;&#x5F85;&#x7EED;...</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="other/堆和栈.html" class="navigation navigation-next " aria-label="Next page: 堆和栈">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"前端开发性能优化","level":"1.2","depth":1,"next":{"title":"堆和栈","level":"1.3","depth":1,"path":"other/堆和栈.md","ref":"./other/堆和栈.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"性能优化.md","mtime":"2019-07-11T08:55:29.681Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-07-11T08:55:38.048Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
