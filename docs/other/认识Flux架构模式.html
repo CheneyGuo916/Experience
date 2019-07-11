@@ -1,0 +1,362 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>React学习之认识Flux架构模式 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="深入Redux应用框架.html" />
+    
+    
+    <link rel="prev" href="解读React源码.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="初入React世界.html">
+            
+                <a href="初入React世界.html">
+            
+                    
+                    React学习之初入React世界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="漫谈React.html">
+            
+                <a href="漫谈React.html">
+            
+                    
+                    React学习之漫谈React
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="解读React源码.html">
+            
+                <a href="解读React源码.html">
+            
+                    
+                    React学习之解读React源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5" data-path="认识Flux架构模式.html">
+            
+                <a href="认识Flux架构模式.html">
+            
+                    
+                    React学习之认识Flux架构模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="深入Redux应用框架.html">
+            
+                <a href="深入Redux应用框架.html">
+            
+                    
+                    React学习之深入Redux应用框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="深入Redux高阶运用.html">
+            
+                <a href="深入Redux高阶运用.html">
+            
+                    
+                    React学习之深入Redux高阶运用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="前端开发性能优化.html">
+            
+                <a href="前端开发性能优化.html">
+            
+                    
+                    React学习之前端开发性能优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="堆和栈.html">
+            
+                <a href="堆和栈.html">
+            
+                    
+                    堆和栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="原型.html">
+            
+                <a href="原型.html">
+            
+                    
+                    proto和prototype之区别和联系
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >React学习之认识Flux架构模式</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="react&#x5B66;&#x4E60;&#x4E4B;&#x8BA4;&#x8BC6;flux&#x67B6;&#x6784;&#x6A21;&#x5F0F;">React&#x5B66;&#x4E60;&#x4E4B;&#x8BA4;&#x8BC6;Flux&#x67B6;&#x6784;&#x6A21;&#x5F0F;</h1>
+<p>Flux&#x662F;Facebook&#x7528;&#x6237;&#x5EFA;&#x7ACB;&#x5BA2;&#x6237;&#x7AEF;Web&#x5E94;&#x7528;&#x7684;&#x524D;&#x7AEF;&#x67B6;&#x6784;&#xFF0C;&#x5B83;&#x901A;&#x8FC7;&#x5229;&#x7528;&#x4E00;&#x4E2A;&#x5355;&#x5411;&#x7684;&#x6570;&#x636E;&#x6D41;&#x8865;&#x5145;&#x4E86;React&#x7684;&#x7EC4;&#x5408;&#x89C6;&#x56FE;&#x7EC4;&#x4EF6;&#xFF0C;&#x8FD9;&#x66F4;&#x662F;&#x4E00;&#x79CD;&#x6A21;&#x5F0F;&#x800C;&#x975E;&#x6B63;&#x5F0F;&#x6846;&#x67B6;&#xFF0C;&#x4F60;&#x80FD;&#x591F;&#x65E0;&#x9700;&#x8BB8;&#x591A;&#x65B0;&#x4EE3;&#x7801;&#x60C5;&#x51B5;&#x4E0B;&#x7ACB;&#x5373;&#x5F00;&#x59CB;&#x4F7F;&#x7528;Flux&#x3002;</p>
+<blockquote>
+<ul>
+<li>Flux&#x5E94;&#x7528;&#x6709;&#x4E09;&#x4E2A;&#x4E3B;&#x8981;&#x90E8;&#x5206;&#xFF1A;Dispatcher&#x8C03;&#x5EA6; &#x3001;&#x5B58;&#x50A8;Store&#x548C;&#x89C6;&#x56FE;View(React &#x7EC4;&#x4EF6;)&#xFF0C;&#x8FD9;&#x4E9B;&#x4E0D;&#x5E94;&#x8BE5;&#x548C;MVC:Model-View-Controll(&#x6A21;&#x578B;-&#x89C6;&#x56FE;-&#x63A7;&#x5236;&#x5668;)&#x6DF7;&#x6DC6;&#xFF0C;&#x63A7;&#x5236;&#x5668;&#x5728;Flux&#x5E94;&#x7528;&#x4E2D;&#x662F;&#x5B58;&#x5728;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x4ED6;&#x4EEC;&#x662F;controller-view(&#x63A7;&#x5236;&#x5668;-&#x89C6;&#x56FE;)&#xFF0C;&#x89C6;&#x56FE;&#x901A;&#x5E38;&#x5728;&#x4E00;&#x4E2A;&#x7ED3;&#x6784;&#x9876;&#x90E8;&#xFF0C;&#x800C;&#x8FD9;&#x79CD;&#x7ED3;&#x6784;&#x662F;&#x7528;&#x6765;&#x4ECE;&#x5B58;&#x50A8;stroe&#x83B7;&#x5F97;&#x6570;&#x636E;&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x6570;&#x636E;&#x4F20;&#x9012;&#x5230;&#x81EA;&#x5DF1;&#x7684;&#x5B50;&#x7ED3;&#x6784;&#x4EEC;&#xFF0C;&#x6B64;&#x5916;&#xFF0C;Action&#x521B;&#x5EFA;&#x8005;-Dispatcher&#x7684;&#x5E2E;&#x52A9;&#x7C7B;&#x7684;&#x65B9;&#x6CD5; -&#x7528;&#x4E8E;&#x652F;&#x6301;&#x4E00;&#x4E2A;&#x8BED;&#x4E49;API&#xFF0C;&#x8FD9;&#x4E2A;API&#x662F;&#x63CF;&#x8FF0;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4E2D;&#x6240;&#x6709;&#x53D8;&#x5316;&#x7684;&#x53EF;&#x80FD;&#xFF0C;&#x901A;&#x5E38;&#x53EF;&#x5C06;&#x5B83;&#x4EEC;&#x770B;&#x6210;&#x662F;Flux&#x66F4;&#x65B0;&#x5FAA;&#x73AF;&#x7684;&#x7B2C;&#x56DB;&#x90E8;&#x5206;&#x3002;</li>
+<li>Flux&#x662F;&#x4EE5;&#x5355;&#x5411;&#x6570;&#x636E;&#x6D41;&#x65B9;&#x5F0F;&#x652F;&#x6301;MVC&#xFF0C;&#x5F53;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x548C;React&#x89C6;&#x56FE;&#x4EA4;&#x4E92;&#x65F6;&#xFF0C;&#x89C6;&#x56FE;&#x4F1A;&#x5C06;&#x8FD9;&#x4E2A;&#x52A8;&#x4F5C;&#x4F20;&#x64AD;&#x5230;&#x4E00;&#x4E2A;&#x4E2D;&#x592E;Dispatcher&#xFF0C;&#x4E00;&#x76F4;&#x5230;&#x5404;&#x79CD;&#x5B58;&#x50A8;&#xFF0C;&#x5728;&#x90A3;&#x91CC;&#x4FDD;&#x5B58;&#x7740;&#x5E94;&#x7528;&#x7684;&#x6570;&#x636E;&#x548C;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#xFF0C;&#x8FD9;&#x4E2A;&#x4F7F;&#x7528;React&#x7684;&#x58F0;&#x660E;&#x5F0F;&#x98CE;&#x683C;&#x7684;&#x8FC7;&#x7A0B;&#x662F;&#x975E;&#x5E38;&#x68D2;&#x7684;&#xFF0C;&#x80FD;&#x591F;&#x5141;&#x8BB8;&#x5B58;&#x50A8;&#x53D1;&#x9001;&#x66F4;&#x65B0;&#x4FE1;&#x606F;&#xFF0C;&#x800C;&#x65E0;&#x9700;&#x6307;&#x5B9A;&#x5728;&#x72B6;&#x6001;&#x4E4B;&#x95F4;&#x5982;&#x4F55;&#x5207;&#x6362;&#x89C6;&#x56FE;&#x3002;(&#x4F20;&#x7EDF;&#x65B9;&#x5F0F;&#x66F4;&#x65B0;&#x72B6;&#x6001;&#x540E;&#xFF0C;&#x4F1A;&#x63A8;&#x51FA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x89C6;&#x56FE;&#x9875;&#x9762;&#x3002;)</li>
+<li>Flux&#x6700;&#x521D;&#x662F;&#x7528;&#x4E8E;&#x6B63;&#x786E;&#x5BFC;&#x51FA;&#x6570;&#x636E;&#xFF0C;&#x6BD4;&#x5982;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x8981;&#x663E;&#x793A;&#x4E00;&#x7CFB;&#x5217;&#x6D88;&#x606F;&#x7684;&#x672A;&#x8BFB;&#x6570;&#x5B57;&#xFF0C;&#x800C;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x89C6;&#x56FE;&#x663E;&#x793A;&#x7684;&#x662F;&#x6240;&#x6709;&#x6D88;&#x606F;&#xFF0C;&#x5176;&#x4E2D;&#x672A;&#x8BFB;&#x7684;&#x6D88;&#x606F;&#x4F1A;&#x9AD8;&#x4EAE;&#x663E;&#x793A;&#x3002;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4F7F;&#x7528;MVC&#x5F88;&#x96BE;&#x5904;&#x7406;&#xFF0C;&#x5C06;&#x4E00;&#x4E2A;&#x6D88;&#x606F;&#x53D8;&#x4E3A;&#x5DF2;&#x8BFB;&#x72B6;&#x6001;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x6D88;&#x606F;&#x6A21;&#x578B;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x672A;&#x8BFB;&#x7684;&#x8BA1;&#x6570;&#x6A21;&#x578B;(&#x5C06;&#x672A;&#x8BFB;&#x6A21;&#x578B;&#x6570;&#x5B57;&#x51CF;1&#xFF0C;&#x56E0;&#x4E3A;&#x521A;&#x53D1;&#x751F;&#x4E00;&#x4E2A;&#x5DF2;&#x8BFB;&#x6539;&#x53D8;)&#xFF0C;&#x8FD9;&#x79CD;&#x4F9D;&#x8D56;&#x548C;&#x7EA7;&#x8054;&#x66F4;&#x65B0;&#x7ECF;&#x5E38;&#x53D1;&#x751F;&#x5728;&#x5927;&#x578B;MVC&#x5E94;&#x7528;&#xFF0C;&#x5BFC;&#x81F4;&#x4E00;&#x4E2A;&#x6DF7;&#x4E71;&#x7684;&#x6570;&#x636E;&#x6D41;&#x7F16;&#x7EC7;&#x548C;&#x4E0D;&#x53EF;&#x9884;&#x77E5;&#x7684;&#x7ED3;&#x679C;&#x3002;</li>
+<li>&#x63A7;&#x5236;&#x5668;&#x88AB;&#x5B58;&#x50A8;&#x53CD;&#x8F6C;&#x63A7;&#x5236;&#xFF1A;&#x5B58;&#x50A8;&#x63A5;&#x53D7;&#x66F4;&#x65B0;&#xFF0C;&#x9002;&#x5F53;&#x5730;&#x8C03;&#x8282;&#x8FD9;&#x4E9B;&#x66F4;&#x65B0;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x4E00;&#x81F4;&#x5730;&#x4F9D;&#x8D56;&#x5916;&#x90E8;&#x66F4;&#x65B0;&#x5176;&#x6570;&#x636E;&#xFF0C;&#x5B58;&#x50A8;&#x4E4B;&#x5916;&#x6839;&#x672C;&#x4E0D;&#x77E5;&#x9053;&#x5B83;&#x662F;&#x5982;&#x4F55;&#x7BA1;&#x7406;&#x9886;&#x57DF;&#x6570;&#x636E;&#x7684;&#xFF0C;&#x8FD9;&#x6709;&#x52A9;&#x4E8E;&#x5B9E;&#x73B0;&#x4E00;&#x79CD;&#x6E05;&#x6670;&#x7684;&#x5206;&#x79BB;&#x5173;&#x6CE8;&#x3002;&#x5B58;&#x50A8;&#x5E76;&#x6CA1;&#x6709;&#x76F4;&#x63A5;&#x7684;&#x7C7B;&#x4F3C;setAsRead()&#x4E4B;&#x7C7B;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x800C;&#x662F;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x5355;&#x4E00;&#x65B9;&#x5F0F;&#x83B7;&#x53D6;&#x6570;&#x636E;&#x5230;&#x5176;&#x81EA;&#x6210;&#x4E00;&#x4F53;&#x7684;&#x4E16;&#x754C;&#x4E2D;&#xFF0C;&#x8FD9;&#x4E2A;&#x65B9;&#x5F0F;&#x5C31;&#x662F;&#x56DE;&#x8C03;&#xFF0C;&#x6CE8;&#x518C;&#x5728;dispatcher&#x4E2D;&#x7684;callback&#x3002;<h4 id="&#x7ED3;&#x6784;&#x548C;&#x6570;&#x636E;&#x6D41;">&#x7ED3;&#x6784;&#x548C;&#x6570;&#x636E;&#x6D41;</h4>
+</li>
+<li>&#x4E00;&#x4E2A;&#x5355;&#x5411;&#x6570;&#x636E;&#x6D41;&#x662F;Flux&#x6A21;&#x5F0F;&#x7684;&#x6838;&#x5FC3;&#x3002;dispatcher &#x5B58;&#x50A8;&#x548C;&#x89C6;&#x56FE;&#x662F;&#x6709;&#x7740;&#x4E0D;&#x540C;&#x8F93;&#x5165;&#x8F93;&#x51FA;&#x7684;&#x72EC;&#x7ACB;&#x8282;&#x70B9;&#xFF0C;Action&#x52A8;&#x4F5C;&#x662F;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x5BF9;&#x8C61;&#xFF0C;&#x53EA;&#x662F;&#x5305;&#x542B;&#x65B0;&#x7684;&#x6570;&#x636E;&#x548C;&#x4E00;&#x4E2A;&#x6807;&#x8BC6;&#x7B26;&#x7C7B;&#x578B;&#x7684;&#x5C5E;&#x6027;&#x3002;</li>
+<li>&#x89C6;&#x56FE;&#x4E5F;&#x8BB8;&#x5F15;&#x8D77;&#x65B0;&#x7684;&#x52A8;&#x4F5C;Action&#xFF0C;&#x8FD9;&#x4E2A;&#x52A8;&#x4F5C;&#x4F5C;&#x4E3A;&#x7528;&#x6237;&#x4EA4;&#x4E92;&#x7684;&#x54CD;&#x5E94;&#x5C06;&#x5728;&#x6574;&#x4E2A;&#x7CFB;&#x7EDF;&#x4F20;&#x64AD;&#xFF1A;
+&#x6240;&#x6709;&#x901A;&#x8FC7;dispatcher&#x7684;&#x6570;&#x636E;&#x6D41;&#x5C06;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x96C6;&#x4E2D;&#x5F0F;Hub&#xFF0C;&#x52A8;&#x4F5C;Action&#x5728;&#x4E00;&#x4E2A;action creator&#x65B9;&#x6CD5;&#x4E2D;&#x88AB;&#x63D0;&#x4F9B;&#x7ED9;dispatcher&#xFF0C;&#x8FD9;&#x4E2A;&#x52A8;&#x4F5C;&#x901A;&#x5E38;&#x6765;&#x81EA;&#x4E8E;&#x89C6;&#x56FE;&#x4E2D;&#x7528;&#x6237;&#x7684;&#x4EA4;&#x4E92;&#xFF0C;dispatcher&#x7136;&#x540E;&#x8C03;&#x7528;&#x5B58;&#x50A8;&#x5DF2;&#x7ECF;&#x6CE8;&#x518C;&#x5176;&#x4E2D;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x5206;&#x53D1;Action&#x52A8;&#x4F5C;&#x5230;&#x6240;&#x6709;&#x7684;&#x5B58;&#x50A8;&#xFF0C;&#x5728;&#x5B83;&#x4EEC;&#x6CE8;&#x518C;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x5B58;&#x50A8;&#x4F1A;&#x54CD;&#x5E94;&#x6BCF;&#x4E2A;&#x548C;&#x5B83;&#x4FDD;&#x5B58;&#x7684;&#x72B6;&#x6001;&#x6709;&#x5173;&#x7684;&#x6BCF;&#x4E2A;&#x52A8;&#x4F5C;Action&#xFF0C;&#x5B58;&#x50A8;&#x7136;&#x540E;&#x53D1;&#x5C04;&#x4E00;&#x4E2A; change&#x6539;&#x53D8;&#x7684;&#x4E8B;&#x4EF6;&#x53BB;&#x63D0;&#x9192;controller-view&#x63A7;&#x5236;&#x5668;-&#x89C6;&#x56FE;&#xFF0C;&#x66F4;&#x65B0;&#x5230;&#x521A;&#x521A;&#x6539;&#x53D8;&#x7684;&#x65B0;&#x6570;&#x636E;&#x3002;controller-view&#x76D1;&#x542C;&#x8FD9;&#x4E9B;&#x4E8B;&#x4EF6;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x4E00;&#x4E2A;&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x5668;&#x4E2D;&#x4ECE;&#x5B58;&#x50A8;&#x4E2D;&#x83B7;&#x53D6;&#x6570;&#x636E;&#xFF0C;controller-view&#x8C03;&#x7528;&#x5B83;&#x4EEC;&#x81EA;&#x5DF1;&#x7684;&quot;setState()&quot;&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x4F1A;&#x89E6;&#x53D1;&#x89C6;&#x56FE;&#x7684;&#x91CD;&#x65B0;&#x6E32;&#x67D3;&#xFF0C;&#x5305;&#x62EC;DOM&#x7EC4;&#x4EF6;&#x6811;&#x4E2D;&#x6240;&#x6709;&#x66F4;&#x65B0;&#x3002;</li>
+<li>&#x8FD9;&#x4E2A;&#x7ED3;&#x6784;&#x5141;&#x8BB8;&#x6211;&#x4EEC;&#x80FD;&#x591F;&#x4EE5;&#x6BD4;&#x8F83;&#x7406;&#x6027;&#x7684;&#x65B9;&#x5F0F;&#x7F16;&#x7A0B;&#xFF0C;&#x8FD9;&#x6709;&#x70B9;&#x7C7B;&#x4F3C;functional reactive programming, or &#x6216; data-flow programming &#x6570;&#x636E;&#x6D41;&#x7F16;&#x7A0B;&#x6216; flow-based programming&#x3002;</li>
+<li>&#x901A;&#x8FC7;&#x5E94;&#x7528;&#x7684;&#x6570;&#x636E;&#x6D41;&#x662F;&#x4E00;&#x4E2A;&#x65B9;&#x5411;&#xFF0C;&#x6CA1;&#x6709;&#x4E24;&#x8FB9;&#x7ED1;&#x5B9A;(two-way bingding&#xFF1A;Angular.js&#x6709;&#x6B64;&#x65B9;&#x5F0F;)&#xFF0C;&#x5E94;&#x7528;&#x72B6;&#x6001;&#x5728;&#x5B58;&#x50A8;&#x4E2D;&#x7EF4;&#x62A4;&#xFF0C;&#x5141;&#x8BB8;&#x5E94;&#x7528;&#x4E0D;&#x540C;&#x90E8;&#x5206;&#x4FDD;&#x6301;&#x89E3;&#x8026;&#xFF0C;&#x5728;&#x5B58;&#x50A8;&#x4E4B;&#x95F4;&#x53D1;&#x751F;&#x4F9D;&#x8D56;&#x7684;&#x5730;&#x65B9;&#xFF0C;&#x5B83;&#x4EEC;&#x80FD;&#x591F;&#x4FDD;&#x6301;&#x4E25;&#x683C;&#x7684;&#x5C42;&#x6B21;&#x5173;&#x7CFB;&#xFF08;&#x8BBE;&#x8BA1;&#x539F;&#x5219;&#xFF1A;&#x5C3D;&#x91CF;&#x677E;&#x8026;&#x5408;&#xFF0C;&#x65E0;&#x6CD5;&#x56DE;&#x907F;&#x7684;&#x5C31;&#x53D8;&#x6210;&#x6811;&#x5F62;&#x5C42;&#x6B21;&#x7ED3;&#x6784;&#xFF09;&#xFF0C;&#x540C;&#x6B65;&#x7BA1;&#x7406;&#x7531;dispatcher&#x8D1F;&#x8D23;&#x3002;&#x800C;two-way&#x7ED1;&#x5B9A;&#x4F1A;&#x5BFC;&#x81F4;&#x7EA7;&#x8054;&#x66F4;&#x65B0;&#xFF0C;&#x5F53;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x6539;&#x53D8;&#x5BFC;&#x81F4;&#x53E6;&#x5916;&#x5BF9;&#x8C61;&#x6539;&#x53D8;&#xFF0C;&#x63A5;&#x7740;&#x4F1A;&#x89E6;&#x53D1;&#x66F4;&#x591A;&#x7684;&#x66F4;&#x65B0;&#xFF0C;&#x5F53;&#x5E94;&#x7528;&#x89C4;&#x6A21;&#x589E;&#x957F;&#x65F6;&#xFF0C;&#x8FD9;&#x4E9B;&#x7EA7;&#x8054;&#x66F4;&#x65B0;&#x4F1A;&#x4F7F;&#x5F97;&#x9884;&#x671F;&#x54CD;&#x5E94;&#x7528;&#x6237;&#x4EA4;&#x4E92;&#x7684;&#x7ED3;&#x679C;&#x53D8;&#x5F97;&#x56F0;&#x96BE;&#xFF0C;&#x5F53;&#x66F4;&#x65B0;&#x53EA;&#x4F1A;&#x5728;&#x4E00;&#x4E2A;&#x8F6E;&#x56DE;&#x4E2D;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x6570;&#x636E;&#x65F6;&#xFF0C;&#x6574;&#x4E2A;&#x7CFB;&#x7EDF;&#x5C31;&#x53D8;&#x5F97;&#x53EF;&#x9884;&#x671F;&#x3002;</li>
+</ul>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="解读React源码.html" class="navigation navigation-prev " aria-label="Previous page: React学习之解读React源码">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="深入Redux应用框架.html" class="navigation navigation-next " aria-label="Next page: React学习之深入Redux应用框架">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"React学习之认识Flux架构模式","level":"1.5","depth":1,"next":{"title":"React学习之深入Redux应用框架","level":"1.6","depth":1,"path":"other/深入Redux应用框架.md","ref":"./other/深入Redux应用框架.md","articles":[]},"previous":{"title":"React学习之解读React源码","level":"1.4","depth":1,"path":"other/解读React源码.md","ref":"./other/解读React源码.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"other/认识Flux架构模式.md","mtime":"2019-07-11T10:02:07.714Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-07-11T12:39:07.096Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

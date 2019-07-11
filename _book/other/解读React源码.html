@@ -1,0 +1,631 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>React学习之解读React源码 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="认识Flux架构模式.html" />
+    
+    
+    <link rel="prev" href="漫谈React.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="初入React世界.html">
+            
+                <a href="初入React世界.html">
+            
+                    
+                    React学习之初入React世界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="漫谈React.html">
+            
+                <a href="漫谈React.html">
+            
+                    
+                    React学习之漫谈React
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4" data-path="解读React源码.html">
+            
+                <a href="解读React源码.html">
+            
+                    
+                    React学习之解读React源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="认识Flux架构模式.html">
+            
+                <a href="认识Flux架构模式.html">
+            
+                    
+                    React学习之认识Flux架构模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="深入Redux应用框架.html">
+            
+                <a href="深入Redux应用框架.html">
+            
+                    
+                    React学习之深入Redux应用框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="深入Redux高阶运用.html">
+            
+                <a href="深入Redux高阶运用.html">
+            
+                    
+                    React学习之深入Redux高阶运用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="前端开发性能优化.html">
+            
+                <a href="前端开发性能优化.html">
+            
+                    
+                    React学习之前端开发性能优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="堆和栈.html">
+            
+                <a href="堆和栈.html">
+            
+                    
+                    堆和栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="原型.html">
+            
+                <a href="原型.html">
+            
+                    
+                    proto和prototype之区别和联系
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >React学习之解读React源码</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="react&#x5B66;&#x4E60;&#x4E4B;&#x89E3;&#x8BFB;react&#x6E90;&#x7801;">React&#x5B66;&#x4E60;&#x4E4B;&#x89E3;&#x8BFB;React&#x6E90;&#x7801;</h1>
+<p>&#x9996;&#x5148;&#x7406;&#x89E3;ReactElement&#x548C;ReactClass&#x7684;&#x6982;&#x5FF5;&#x3002;&#x60F3;&#x8981;&#x66F4;&#x597D;&#x7684;&#x5229;&#x7528;react&#x7684;&#x865A;&#x62DF;DOM&#xFF0C;diff&#x7B97;&#x6CD5;&#x7684;&#x4F18;&#x52BF;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x6B63;&#x786E;&#x7684;&#x4F18;&#x5316;&#x3001;&#x7EC4;&#x7EC7;react&#x9875;&#x9762;&#x3002;</p>
+<ul>
+<li><h3 id="&#x7406;&#x89E3;reactelement&#x548C;reactclass&#x7684;&#x6982;&#x5FF5;">&#x7406;&#x89E3;ReactElement&#x548C;ReactClass&#x7684;&#x6982;&#x5FF5;</h3>
+<blockquote>
+<h4 id="reactelement">ReactElement</h4>
+<p>&#x4E00;&#x4E2A;&#x63CF;&#x8FF0;DOM&#x8282;&#x70B9;&#x6216;component&#x5B9E;&#x4F8B;&#x7684;&#x5B57;&#x9762;&#x7EA7;&#x5BF9;&#x8C61;&#x3002;&#x5B83;&#x5305;&#x542B;&#x4E00;&#x4E9B;&#x4FE1;&#x606F;&#xFF0C;&#x5305;&#x62EC;&#x7EC4;&#x4EF6;&#x7C7B;&#x578B;type&#x548C;&#x5C5E;&#x6027;props&#x3002;&#x5C31;&#x50CF;&#x4E00;&#x4E2A;&#x63CF;&#x8FF0;DOM&#x8282;&#x70B9;&#x7684;&#x5143;&#x7D20;(&#x865A;&#x62DF;&#x8282;&#x70B9;)&#x3002;&#x5B83;&#x4EEC;&#x53EF;&#x4EE5;&#x88AB;&#x521B;&#x5EFA;&#x901A;&#x8FC7;React.createElement&#x65B9;&#x6CD5;&#x6216;jsx&#x5199;&#x6CD5;
+&#x5206;&#x4E3A;DOM Element&#x548C;Component Elements&#x4E24;&#x7C7B;&#xFF1A;</p>
+<blockquote>
+<ul>
+<li>DOM Elements
+&#x5F53;&#x8282;&#x70B9;&#x7684;type&#x5C5E;&#x6027;&#x4E3A;&#x5B57;&#x7B26;&#x4E32;&#x65F6;&#xFF0C;&#x5B83;&#x4EE3;&#x8868;&#x662F;&#x666E;&#x901A;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x5982;div,span<pre><code>{ 
+type: &apos;button&apos;, 
+props: { 
+className: &apos;button button-blue&apos;, 
+children: { 
+ type: &apos;b&apos;, 
+ props: { 
+   children: &apos;OK!&apos; 
+ } 
+} 
+} 
+}
+</code></pre></li>
+<li>Component Elements
+&#x5F53;&#x8282;&#x70B9;&#x7684;type&#x5C5E;&#x6027;&#x4E3A;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x6216;&#x4E00;&#x4E2A;&#x7C7B;&#x65F6;&#xFF0C;&#x5B83;&#x4EE3;&#x8868;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x8282;&#x70B9;
+```
+class Button extends React.Component { 
+render() { 
+const { children, color } = this.props; 
+return { 
+ type: &apos;button&apos;, 
+ props: { 
+   className: &apos;button button-&apos; + color, 
+   children: { <pre><code> type: &apos;b&apos;, 
+ props: { 
+  children: children 
+ } 
+</code></pre>   } 
+ } 
+}; 
+} 
+} </li>
+</ul>
+<p>// Component Elements 
+{ 
+type: Button, 
+props: { 
+ color: &apos;blue&apos;, 
+ children: &apos;OK!&apos; 
+} 
+}  </p>
+<pre><code>#### ReactElement
+ReactClass&#x662F;&#x5E73;&#x65F6;&#x6211;&#x4EEC;&#x5199;&#x7684;Component&#x7EC4;&#x4EF6;(&#x7C7B;&#x6216;&#x51FD;&#x6570;)&#xFF0C;&#x4F8B;&#x5982;&#x4E0A;&#x9762;&#x7684;Button&#x7C7B;&#x3002;ReactClass&#x5B9E;&#x4F8B;&#x5316;&#x540E;&#x8C03;&#x7528;render&#x65B9;&#x6CD5;&#x53EF;&#x8FD4;&#x56DE;DOM Element&#x3002;
+#### react&#x6E32;&#x67D3;&#x8FC7;&#x7A0B;
+&#x8FC7;&#x7A0B;&#x7406;&#x89E3;:
+</code></pre><p>// element&#x662F; Component Elements 
+ReactDOM.render({ 
+type: Form, 
+props: { 
+ isSubmitted: false, 
+ buttonText: &apos;OK!&apos; 
+} 
+}, document.getElementById(&apos;root&apos;));</p>
+<pre><code>1. &#x8C03;&#x7528;React.render&#x65B9;&#x6CD5;&#xFF0C;&#x5C06;&#x6211;&#x4EEC;&#x7684;element&#x6839;&#x865A;&#x62DF;&#x8282;&#x70B9;&#x6E32;&#x67D3;&#x5230;container&#x5143;&#x7D20;&#x4E2D;&#x3002;element&#x53EF;&#x4EE5;&#x662F;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x6587;&#x672C;&#x5143;&#x7D20;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x5982;&#x4E0A;&#x4ECB;&#x7ECD;&#x7684;ReactElement(&#x5206;&#x4E3A;DOM Elements, Component Elements)&#x3002;
+2. &#x6839;&#x636E;element&#x7684;&#x7C7B;&#x578B;&#x4E0D;&#x540C;&#xFF0C;&#x5206;&#x522B;&#x5B9E;&#x4F8B;&#x5316;ReactDOMTextComponent, ReactDOMComponent, ReactCompositeComponent&#x7C7B;&#x3002;&#x8FD9;&#x4E9B;&#x7C7B;&#x7528;&#x6765;&#x7BA1;&#x7406;ReactElement,&#x8D1F;&#x8D23;&#x5C06;&#x4E0D;&#x540C;&#x7684;ReactElement&#x8F6C;&#x5316;&#x6210;DOM(mountComponent&#x65B9;&#x6CD5;),&#x8D1F;&#x8D23;&#x66F4;&#x65B0;DOM(receiveComponent&#x65B9;&#x6CD5;&#xFF0C;updateComponent&#x65B9;&#x6CD5;, &#x5982;&#x4E0B;&#x4F1A;&#x4ECB;&#x7ECD;)&#x7B49;&#x3002;
+3. ReactCompositeComponent&#x5B9E;&#x4F8B;&#x8C03;&#x7528;mountComponent&#x65B9;&#x6CD5;&#x540E;&#x5185;&#x90E8;&#x8C03;&#x7528;render&#x65B9;&#x6CD5;&#xFF0C;&#x8FD4;&#x56DE;&#x4E86;DOM Elements&#x3002;
+#### react&#x66F4;&#x65B0;&#x673A;&#x5236;
+&#x6BCF;&#x4E2A;&#x7C7B;&#x578B;&#x7684;&#x5143;&#x7D20;&#x90FD;&#x8981;&#x5904;&#x7406;&#x597D;&#x81EA;&#x5DF1;&#x7684;&#x66F4;&#x65B0;&#xFF1A;
+1. &#x81EA;&#x5B9A;&#x4E49;&#x5143;&#x7D20;&#x7684;&#x66F4;&#x65B0;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x66F4;&#x65B0;render&#x51FA;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x505A;&#x7529;&#x624B;&#x638C;&#x67DC;&#x4EA4;&#x7ED9;render&#x51FA;&#x7684;&#x8282;&#x70B9;&#x7684;&#x5BF9;&#x5E94;component&#x53BB;&#x7BA1;&#x7406;&#x66F4;&#x65B0;&#x3002;
+2. text&#x8282;&#x70B9;&#x7684;&#x66F4;&#x65B0;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x76F4;&#x63A5;&#x66F4;&#x65B0;&#x6587;&#x6848;&#x3002;
+3. &#x6D4F;&#x89C8;&#x5668;&#x57FA;&#x672C;&#x5143;&#x7D20;&#x7684;&#x66F4;&#x65B0;&#xFF0C;&#x5206;&#x4E3A;&#x4E24;&#x5757;&#xFF1A;
+&gt; * &#x5148;&#x662F;&#x66F4;&#x65B0;&#x5C5E;&#x6027;&#xFF0C;&#x5BF9;&#x6BD4;&#x51FA;&#x524D;&#x540E;&#x5C5E;&#x6027;&#x7684;&#x4E0D;&#x540C;&#xFF0C;&#x5C40;&#x90E8;&#x66F4;&#x65B0;&#x3002;&#x5E76;&#x4E14;&#x5904;&#x7406;&#x7279;&#x6B8A;&#x5C5E;&#x6027;&#xFF0C;&#x6BD4;&#x5982;&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;&#x3002;
+&gt; * &#x7136;&#x540E;&#x662F;&#x5B50;&#x8282;&#x70B9;&#x7684;&#x66F4;&#x65B0;&#xFF0C;&#x5B50;&#x8282;&#x70B9;&#x66F4;&#x65B0;&#x4E3B;&#x8981;&#x662F;&#x627E;&#x51FA;&#x5DEE;&#x5F02;&#x5BF9;&#x8C61;&#xFF0C;&#x627E;&#x5DEE;&#x5F02;&#x5BF9;&#x8C61;&#x7684;&#x65F6;&#x5019;&#x4E5F;&#x4F1A;&#x4F7F;&#x7528;&#x4E0A;&#x9762;&#x7684;shouldUpdateReactComponent&#x6765;&#x5224;&#x65AD;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x66F4;&#x65B0;&#x7684;&#x5C31;&#x4F1A;&#x9012;&#x5F52;&#x8C03;&#x7528;&#x5B50;&#x8282;&#x70B9;&#x7684;&#x66F4;&#x65B0;,&#x8FD9;&#x6837;&#x4E5F;&#x4F1A;&#x9012;&#x5F52;&#x67E5;&#x627E;&#x5DEE;&#x5F02;&#x5BF9;&#x8C61;&#x3002;&#x4E0D;&#x53EF;&#x76F4;&#x63A5;&#x66F4;&#x65B0;&#x7684;&#x5220;&#x9664;&#x4E4B;&#x524D;&#x7684;&#x5BF9;&#x8C61;&#x6216;&#x6DFB;&#x52A0;&#x65B0;&#x7684;&#x5BF9;&#x8C61;&#x3002;&#x4E4B;&#x540E;&#x6839;&#x636E;&#x5DEE;&#x5F02;&#x5BF9;&#x8C61;&#x64CD;&#x4F5C;dom&#x5143;&#x7D20;(&#x4F4D;&#x7F6E;&#x53D8;&#x52A8;&#xFF0C;&#x5220;&#x9664;&#xFF0C;&#x6DFB;&#x52A0;&#x7B49;)&#x3002;
+#### &#x7B2C;&#x4E00;&#x6B65;&#xFF1A;&#x8C03;&#x7528;this.setState
+</code></pre><p>ReactClass.prototype.setState = function(newState) { 
+ //this._reactInternalInstance&#x662F;ReactCompositeComponent&#x7684;&#x5B9E;&#x4F8B; 
+ this._reactInternalInstance.receiveComponent(null, newState); 
+}  </p>
+<pre><code>#### &#x7B2C;&#x4E8C;&#x6B65;&#xFF1A;&#x8C03;&#x7528;&#x5185;&#x90E8;receiveComponent&#x65B9;&#x6CD5;
+&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x5206;&#x4E09;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x6587;&#x672C;&#x5143;&#x7D20;&#xFF0C;&#x57FA;&#x672C;&#x5143;&#x7D20;&#xFF0C;&#x81EA;&#x5B9A;&#x4E49;&#x5143;&#x7D20;&#x3002;
+&#x81EA;&#x5B9A;&#x4E49;&#x5143;&#x7D20;:
+receiveComponent&#x65B9;&#x6CD5;&#x6E90;&#x7801;:
+</code></pre><p>// receiveComponent&#x65B9;&#x6CD5; 
+ReactCompositeComponent.prototype.receiveComponent = function(nextElement, transaction, nextContext) { 
+ var prevElement = this._currentElement; 
+ var prevContext = this._context; </p>
+</blockquote>
+<p> this._pendingElement = null; </p>
+<p> this.updateComponent( 
+   transaction, 
+   prevElement, 
+   nextElement, 
+   prevContext, 
+   nextContext 
+ ); </p>
+<p>}  </p>
+<pre><code>updateComponent&#x65B9;&#x6CD5;&#x6E90;&#x7801;
+</code></pre><p>// updateComponent&#x65B9;&#x6CD5; 
+ReactCompositeComponent.prototype.updateComponent = function( 
+transaction, 
+prevParentElement, 
+nextParentElement, 
+prevUnmaskedContext, 
+nextUnmaskedContext 
+) { 
+// &#x7B80;&#x5199;..... </p>
+<p> // &#x4E0D;&#x662F;state&#x66F4;&#x65B0;&#x800C;&#x662F;props&#x66F4;&#x65B0; 
+ if (prevParentElement !== nextParentElement) { 
+   willReceive = true; 
+ } </p>
+<p> if (willReceive &amp;&amp; inst.componentWillReceiveProps) { </p>
+<pre><code> // &#x8C03;&#x7528;&#x751F;&#x547D;&#x5468;&#x671F;componentWillReceiveProps&#x65B9;&#x6CD5; 
+</code></pre><p> } </p>
+<p> // &#x662F;&#x5426;&#x66F4;&#x65B0;&#x5143;&#x7D20; 
+ if (inst.shouldComponentUpdate) { </p>
+<pre><code> // &#x5982;&#x679C;&#x63D0;&#x4F9B;shouldComponentUpdate&#x65B9;&#x6CD5; 
+ shouldUpdate = inst.shouldComponentUpdate(nextProps, nextState, nextContext); 
+</code></pre><p> } else { </p>
+<pre><code> if (this._compositeType === CompositeTypes.PureClass) { 
+   // &#x5982;&#x679C;&#x662F;PureClass&#xFF0C;&#x6D45;&#x5C42;&#x5BF9;&#x6BD4;props&#x548C;state 
+   shouldUpdate = 
+     !shallowEqual(prevProps, nextProps) || 
+     !shallowEqual(inst.state, nextState); 
+ } 
+</code></pre><p> } </p>
+<p> if (shouldUpdate) { 
+   // &#x66F4;&#x65B0;&#x5143;&#x7D20; 
+   this._performComponentUpdate( </p>
+<pre><code> nextParentElement, 
+ nextProps, 
+ nextState, 
+ nextContext, 
+ transaction, 
+ nextUnmaskedContext 
+</code></pre><p>   ); 
+ } else { 
+   // &#x4E0D;&#x66F4;&#x65B0;&#x5143;&#x7D20;&#xFF0C;&#x4F46;&#x4ECD;&#x7136;&#x8BBE;&#x7F6E;props&#x548C;state 
+   this._currentElement = nextParentElement; 
+   this._context = nextUnmaskedContext; 
+   inst.props = nextProps; 
+   inst.state = nextState; 
+   inst.context = nextContext; 
+ } </p>
+<p>// ....... </p>
+<p>}  </p>
+<pre><code>&#x5185;&#x90E8;_performComponentUpdate&#x65B9;&#x6CD5;&#x6E90;&#x7801;
+</code></pre><p>function shouldUpdateReactComponent(prevElement, nextElement){ 
+var prevEmpty = prevElement === null || prevElement === false; 
+var nextEmpty = nextElement === null || nextElement === false; 
+if (prevEmpty || nextEmpty) { 
+ return prevEmpty === nextEmpty; 
+} </p>
+<p>var prevType = typeof prevElement; 
+var nextType = typeof nextElement; </p>
+<p>if (prevType === &apos;string&apos; || prevType === &apos;number&apos;) { 
+ // &#x5982;&#x679C;&#x5148;&#x524D;&#x7684;ReactElement&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x662F;&#x5B57;&#x7B26;&#x4E32;&#x6216;&#x6570;&#x5B57;&#xFF0C;&#x65B0;&#x7684;ReactElement&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x4E5F;&#x662F;&#x5B57;&#x7B26;&#x4E32;&#x6216;&#x6570;&#x5B57;&#xFF0C;
+ return (nextType === &apos;string&apos; || nextType === &apos;number&apos;); 
+} else { 
+   // &#x5982;&#x679C;&#x5148;&#x524D;&#x7684;ReactElement&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x662F;&#x5BF9;&#x8C61;&#xFF0C;&#x65B0;&#x7684;ReactElement&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x4E5F;&#x662F;&#x5BF9;&#x8C61;&#xFF0C;&#x5E76;&#x4E14;&#x6807;&#x7B7E;&#x7C7B;&#x578B;&#x548C;key&#x503C;&#x76F8;&#x540C;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x66F4;&#x65B0; 
+  return ( </p>
+<pre><code>nextType === &apos;object&apos; &amp;&amp; 
+prevElement.type === nextElement.type &amp;&amp; 
+prevElement.key === nextElement.key 
+</code></pre><p>  ); 
+} 
+}</p>
+<pre><code>&#x57FA;&#x672C;&#x5143;&#x7D20;
+receiveComponent&#x65B9;&#x6CD5;&#x6E90;&#x7801;
+</code></pre><p>ReactDOMComponent.prototype.receiveComponent = function(nextElement, transaction, context) { 
+var prevElement = this._currentElement; 
+  this._currentElement = nextElement; 
+ this.updateComponent(transaction, prevElement, nextElement, context); 
+}  </p>
+<pre><code>updateComponent&#x65B9;&#x6CD5;&#x6E90;&#x7801;
+</code></pre><p>ReactDOMComponent.prototype.updateComponent = function(transaction, prevElement, nextElement, context) { 
+ // &#x7565;..... 
+ //&#x9700;&#x8981;&#x5355;&#x72EC;&#x7684;&#x66F4;&#x65B0;&#x5C5E;&#x6027; 
+ this._updateDOMProperties(lastProps, nextProps, transaction, isCustomComponentTag); 
+ //&#x518D;&#x66F4;&#x65B0;&#x5B50;&#x8282;&#x70B9; 
+ this._updateDOMChildren( 
+   lastProps, 
+   nextProps, 
+   transaction, 
+   context 
+ ); </p>
+<p> // ...... 
+}  </p>
+<pre><code>this._updateDOMChildren&#x65B9;&#x6CD5;&#x5185;&#x90E8;&#x8C03;&#x7528;diff&#x7B97;&#x6CD5;&#x3002;
+#### react Diff&#x7B97;&#x6CD5;
+diff&#x7B97;&#x6CD5;&#x6E90;&#x7801;
+</code></pre><p>_updateChildren: function(nextNestedChildrenElements, transaction, context) { 
+ var prevChildren = this._renderedChildren; 
+ var removedNodes = {}; 
+ var mountImages = []; </p>
+<p> // &#x83B7;&#x53D6;&#x65B0;&#x7684;&#x5B50;&#x5143;&#x7D20;&#x6570;&#x7EC4; 
+ var nextChildren = this._reconcilerUpdateChildren( 
+   prevChildren, 
+   nextNestedChildrenElements, 
+   mountImages, 
+   removedNodes, 
+   transaction, 
+   context 
+ ); </p>
+<p> if (!nextChildren &amp;&amp; !prevChildren) { 
+   return; 
+ } </p>
+<p> var updates = null; 
+ var name; 
+ var nextIndex = 0; 
+ var lastIndex = 0; 
+ var nextMountIndex = 0; 
+ var lastPlacedNode = null; </p>
+<p> for (name in nextChildren) { 
+   if (!nextChildren.hasOwnProperty(name)) { </p>
+<pre><code> continue; 
+</code></pre><p>   } 
+   var prevChild = prevChildren &amp;&amp; prevChildren[name]; 
+   var nextChild = nextChildren[name]; 
+   if (prevChild === nextChild) { </p>
+<pre><code>   // &#x540C;&#x4E00;&#x4E2A;&#x5F15;&#x7528;&#xFF0C;&#x8BF4;&#x660E;&#x662F;&#x4F7F;&#x7528;&#x7684;&#x540C;&#x4E00;&#x4E2A;component,&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x505A;&#x79FB;&#x52A8;&#x7684;&#x64CD;&#x4F5C; 
+   // &#x79FB;&#x52A8;&#x5DF2;&#x6709;&#x7684;&#x5B50;&#x8282;&#x70B9; 
+   // NOTICE&#xFF1A;&#x8FD9;&#x91CC;&#x6839;&#x636E;nextIndex, lastIndex&#x51B3;&#x5B9A;&#x662F;&#x5426;&#x79FB;&#x52A8; 
+ updates = enqueue( 
+   updates, 
+   this.moveChild(prevChild, lastPlacedNode, nextIndex, lastIndex) 
+ ); 
+
+ // &#x66F4;&#x65B0;lastIndex 
+ lastIndex = Math.max(prevChild._mountIndex, lastIndex); 
+ // &#x66F4;&#x65B0;component&#x7684;.mountIndex&#x5C5E;&#x6027; 
+ prevChild._mountIndex = nextIndex; 
+</code></pre><p>   } else { </p>
+<pre><code> if (prevChild) { 
+   // &#x66F4;&#x65B0;lastIndex 
+   lastIndex = Math.max(prevChild._mountIndex, lastIndex); 
+ } 
+
+ // &#x6DFB;&#x52A0;&#x65B0;&#x7684;&#x5B50;&#x8282;&#x70B9;&#x5728;&#x6307;&#x5B9A;&#x7684;&#x4F4D;&#x7F6E;&#x4E0A; 
+ updates = enqueue( 
+   updates, 
+   this._mountChildAtIndex( 
+     nextChild, 
+     mountImages[nextMountIndex], 
+     lastPlacedNode, 
+     nextIndex, 
+     transaction, 
+     context 
+   ) 
+ ); 
+
+
+ nextMountIndex++; 
+</code></pre><p>   } </p>
+<p>   // &#x66F4;&#x65B0;nextIndex 
+   nextIndex++; 
+   lastPlacedNode = ReactReconciler.getHostNode(nextChild); 
+ } </p>
+<p> // &#x79FB;&#x9664;&#x6389;&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x65E7;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x548C;&#x65E7;&#x5B50;&#x8282;&#x70B9;&#x548C;&#x65B0;&#x5B50;&#x8282;&#x70B9;&#x4E0D;&#x540C;&#x7684;&#x65E7;&#x5B50;&#x8282;&#x70B9; 
+ for (name in removedNodes) { 
+   if (removedNodes.hasOwnProperty(name)) { </p>
+<pre><code> updates = enqueue( 
+   updates, 
+   this._unmountChild(prevChildren[name], removedNodes[name]) 
+ ); 
+</code></pre><p>   } 
+ } 
+}<br>```</p>
+<h4 id="react&#x7684;&#x4F18;&#x70B9;&#x4E0E;&#x603B;&#x7ED3;">react&#x7684;&#x4F18;&#x70B9;&#x4E0E;&#x603B;&#x7ED3;</h4>
+<h4 id="&#x4F18;&#x70B9;&#xFF1A;">&#x4F18;&#x70B9;&#xFF1A;</h4>
+<blockquote>
+<ul>
+<li>&#x865A;&#x62DF;&#x8282;&#x70B9;&#x3002;&#x5728;UI&#x65B9;&#x9762;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x7ACB;&#x523B;&#x66F4;&#x65B0;&#x89C6;&#x56FE;&#xFF0C;&#x800C;&#x662F;&#x751F;&#x6210;&#x865A;&#x62DF;DOM&#x540E;&#x7EDF;&#x4E00;&#x6E32;&#x67D3;&#x3002;</li>
+<li>&#x7EC4;&#x4EF6;&#x673A;&#x5236;&#x3002;&#x5404;&#x4E2A;&#x7EC4;&#x4EF6;&#x72EC;&#x7ACB;&#x7BA1;&#x7406;,&#x5C42;&#x5C42;&#x5D4C;&#x5957;&#xFF0C;&#x4E92;&#x4E0D;&#x5F71;&#x54CD;&#xFF0C;react&#x5185;&#x90E8;&#x5B9E;&#x73B0;&#x7684;&#x6E32;&#x67D3;&#x529F;&#x80FD;&#x3002;</li>
+<li>&#x5DEE;&#x5F02;&#x7B97;&#x6CD5;&#x3002;&#x6839;&#x636E;&#x57FA;&#x672C;&#x5143;&#x7D20;&#x7684;key&#x503C;&#xFF0C;&#x5224;&#x65AD;&#x662F;&#x5426;&#x9012;&#x5F52;&#x66F4;&#x65B0;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x8FD8;&#x662F;&#x5220;&#x9664;&#x65E7;&#x8282;&#x70B9;&#xFF0C;&#x6DFB;&#x52A0;&#x65B0;&#x8282;&#x70B9;&#x3002;<h4 id="&#x603B;&#x7ED3;&#xFF1A;">&#x603B;&#x7ED3;&#xFF1A;</h4>
+&#x60F3;&#x8981;&#x66F4;&#x597D;&#x7684;&#x5229;&#x7528;react&#x7684;&#x865A;&#x62DF;DOM&#xFF0C;diff&#x7B97;&#x6CD5;&#x7684;&#x4F18;&#x52BF;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x6B63;&#x786E;&#x7684;&#x4F18;&#x5316;&#x3001;&#x7EC4;&#x7EC7;react&#x9875;&#x9762;&#x3002;&#x4F8B;&#x5982;&#x5C06;&#x4E00;&#x4E2A;&#x9875;&#x9762;render&#x7684;ReactElement&#x8282;&#x70B9;&#x5206;&#x89E3;&#x6210;&#x591A;&#x4E2A;&#x7EC4;&#x4EF6;&#x3002;&#x5728;&#x9700;&#x8981;&#x4F18;&#x5316;&#x7684;&#x7EC4;&#x4EF6;&#x624B;&#x52A8;&#x6DFB;&#x52A0; shouldComponentUpdate &#x6765;&#x907F;&#x514D;&#x4E0D;&#x9700;&#x8981;&#x7684; re-render&#x3002;</li>
+</ul>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="漫谈React.html" class="navigation navigation-prev " aria-label="Previous page: React学习之漫谈React">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="认识Flux架构模式.html" class="navigation navigation-next " aria-label="Next page: React学习之认识Flux架构模式">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"React学习之解读React源码","level":"1.4","depth":1,"next":{"title":"React学习之认识Flux架构模式","level":"1.5","depth":1,"path":"other/认识Flux架构模式.md","ref":"./other/认识Flux架构模式.md","articles":[]},"previous":{"title":"React学习之漫谈React","level":"1.3","depth":1,"path":"other/漫谈React.md","ref":"./other/漫谈React.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"other/解读React源码.md","mtime":"2019-07-11T10:01:51.889Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-07-11T12:36:57.957Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
